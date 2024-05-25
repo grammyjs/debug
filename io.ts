@@ -1,21 +1,41 @@
-import process from "node:process";
-import { isatty } from "node:tty";
 import { colorNamespace } from "./colors.ts";
+declare const process: typeof import("node:process");
 
-const noColor = !isatty(2) && (globalThis.Deno?.noColor ?? env("NO_COLOR"));
-
-export function env(variable: string) {
-  const perm = globalThis.Deno?.permissions.querySync?.({
-    name: "env",
-    variable,
-  });
-  if (perm == null || perm.state === "granted") {
-    return process.env[variable] ?? "";
-  }
-  return "";
+function deno() {
+  const encoder = new TextEncoder();
+  const env = (variable: string) =>
+    Deno.permissions.querySync?.({ name: "env", variable })?.state === "prompt"
+      ? ""
+      : Deno.env.get(variable) ?? "";
+  const noColor = Deno.noColor && !Deno.stderr.isTerminal();
+  const log = (namespace: string, message: string) => {
+    if (!noColor) namespace = colorNamespace(namespace);
+    Deno.stderr.writeSync(encoder.encode(`${namespace} ${message}\n`));
+  };
+  const DEBUG = env("DEBUG");
+  return { DEBUG, log };
 }
 
-export function log(namespace: string, message: string) {
-  if (!noColor) namespace = colorNamespace(namespace);
-  process.stderr.write(`${namespace} ${message}\n`);
+function node() {
+  const noColor = !process.stderr.isTTY && !!process.env.NO_COLOR;
+  const log = (namespace: string, message: string) => {
+    if (!noColor) namespace = colorNamespace(namespace);
+    process.stderr.write(`${namespace} ${message}\n`);
+  };
+  const { DEBUG = "" } = process.env;
+  return { DEBUG, log };
 }
+
+function web() {
+  const log = (namespace: string, message: string) => {
+    console.debug(colorNamespace(namespace), message);
+  };
+  const DEBUG = "*";
+  return { DEBUG, log };
+}
+
+// deno-fmt-ignore
+export const { DEBUG, log } =
+  "Deno" in globalThis ? deno()
+  : "process" in globalThis ? node()
+  : web();

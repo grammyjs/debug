@@ -1,7 +1,7 @@
 import { format } from "node:util";
-import { env, log } from "./io.ts";
+import { DEBUG, log } from "./io.ts";
 
-const enabled = env("DEBUG").split(/[\s,]+/);
+const enabled = DEBUG.split(/[\s,]+/);
 
 export const createDebug = (namespace: string) => {
   const debug = (...args: unknown[]) => {
