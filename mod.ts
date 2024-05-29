@@ -3,7 +3,12 @@ import { DEBUG, log } from "./io.ts";
 
 const enabled = DEBUG.split(/[\s,]+/);
 
-export const createDebug = (namespace: string) => {
+export interface DebugFn {
+  (...args: unknown[]): void;
+  enabled: boolean;
+}
+
+export const createDebug = (namespace: string): DebugFn => {
   const debug = (...args: unknown[]) => {
     if (debug.enabled) log(namespace, format(...args));
   };

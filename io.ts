@@ -10,7 +10,11 @@ function deno() {
   const noColor = Deno.noColor && !Deno.stderr.isTerminal();
   const log = (namespace: string, message: string) => {
     if (!noColor) namespace = colorNamespace(namespace);
-    Deno.stderr.writeSync(encoder.encode(`${namespace} ${message}\n`));
+    if (Deno.stderr) {
+      Deno.stderr.writeSync(encoder.encode(`${namespace} ${message}\n`));
+    } else { // Deno Deploy
+      console.debug(namespace, message);
+    }
   };
   const DEBUG = env("DEBUG");
   return { DEBUG, log };
@@ -26,11 +30,12 @@ function node() {
   return { DEBUG, log };
 }
 
-function web() {
+function cfw() {
   const log = (namespace: string, message: string) => {
     console.debug(colorNamespace(namespace), message);
   };
-  const DEBUG = "*";
+  // @ts-ignore CFW
+  const DEBUG: string = globalThis.env?.DEBUG ?? "";
   return { DEBUG, log };
 }
 
@@ -38,4 +43,4 @@ function web() {
 export const { DEBUG, log } =
   "Deno" in globalThis ? deno()
   : "process" in globalThis ? node()
-  : web();
+  : cfw();
