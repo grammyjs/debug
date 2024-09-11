@@ -1,4 +1,4 @@
-import { colorNamespace } from "./colors.ts";
+import { colorNamespace, selectColor } from "./colors.ts";
 declare const process: typeof import("node:process");
 
 function deno() {
@@ -32,7 +32,8 @@ function node() {
 
 function cfw() {
   const log = (namespace: string, message: string) => {
-    console.debug(colorNamespace(namespace), message);
+    const color = selectColor(namespace).toString(16);
+    console.debug("%c%s", `color: #${color}`, namespace, message);
   };
   // @ts-ignore CFW
   const DEBUG: string = globalThis.env?.DEBUG ?? "";
