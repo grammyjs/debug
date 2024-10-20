@@ -7,9 +7,9 @@ function deno() {
     Deno.permissions.querySync?.({ name: "env", variable })?.state === "prompt"
       ? ""
       : Deno.env.get(variable) ?? "";
-  const noColor = Deno.noColor && !Deno.stderr.isTerminal();
+  const useColor = !Deno.noColor && Deno.stderr?.isTerminal() !== false;
   const log = (namespace: string, message: string) => {
-    if (!noColor) namespace = colorNamespace(namespace);
+    if (useColor) namespace = colorNamespace(namespace);
     if (Deno.stderr) {
       Deno.stderr.writeSync(encoder.encode(`${namespace} ${message}\n`));
     } else { // Deno Deploy
@@ -21,9 +21,9 @@ function deno() {
 }
 
 function node() {
-  const noColor = !process.stderr.isTTY && !!process.env.NO_COLOR;
+  const useColor = !process.env.NO_COLOR && process.stderr.isTTY;
   const log = (namespace: string, message: string) => {
-    if (!noColor) namespace = colorNamespace(namespace);
+    if (useColor) namespace = colorNamespace(namespace);
     process.stderr.write(`${namespace} ${message}\n`);
   };
   const { DEBUG = "" } = process.env;
