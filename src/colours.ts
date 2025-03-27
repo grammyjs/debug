@@ -1,3 +1,5 @@
+// Inherited from https://github.com/grammyjs/debug/blob/502f75667a64391adb9a73b1312a52a8e9ba5f64/colors.ts
+
 // https://github.com/debug-js/debug/blob/4.3.7/src/browser.js
 const colors = [
 	0x0000cc, 0x0000ff, 0x0033cc, 0x0033ff, 0x0066cc, 0x0066ff, 0x0099cc, 0x0099ff, 0x00cc00, 0x00cc33, 0x00cc66,

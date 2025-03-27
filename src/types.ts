@@ -1,6 +1,8 @@
 // type-safe way to access global values that may not be available in all runtimes
 
 export const context = globalThis as unknown as {
+	// browsers
+	document?: any;
 	// Node, Deno, Bun
 	process?: {
 		env: { [key: string]: string };

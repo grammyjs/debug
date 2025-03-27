@@ -1,5 +1,5 @@
 import { context } from "./types.ts";
-import { colourNs } from "./colours.ts";
+import { colourNs, selectColour } from "./colours.ts";
 import { getEnv } from "./env.ts";
 import { Namespaces } from "./namespacing.ts";
 const DEBUG = getEnv("DEBUG");
@@ -18,9 +18,18 @@ export interface DebugFn {
 export const w = (namespace: string = ""): DebugFn => {
 	const debugfn = (...args: unknown[]) => {
 		if (debugfn.enabled) {
-			const ns = useColour ? colourNs(namespace) : namespace;
 			const [p0, ...rest] = args;
-			debugfn.logger(`${ns} ${p0}`, ...rest);
+			if (context.document) {
+				debugfn.logger(
+					`%c${namespace}%c ${p0}`,
+					`color: #${selectColour(namespace).toString(16)}`,
+					"color: inherit",
+					...rest,
+				);
+			} else {
+				let ns = useColour ? colourNs(namespace) : namespace;
+				debugfn.logger(`${ns} ${p0}`, ...rest);
+			}
 		}
 	};
 
