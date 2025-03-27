@@ -1,27 +1,15 @@
 import { context } from "./types.ts";
 import { colourNs } from "./colours.ts";
-
-const getDenoEnv = (variable: string) => {
-	const Deno = context.Deno;
-	const state = Deno!.permissions.querySync?.({ name: "env", variable })?.state;
-	if (state === "prompt") return "";
-	return Deno!.env.get(variable) ?? "";
-};
-
-const deno = "Deno" in globalThis;
-
-const getEnv = (variable: string) => {
-	if (deno) return getDenoEnv(variable);
-	return context.process?.env[variable] || context.env?.[variable] || "";
-};
+import { getEnv } from "./env.ts";
 
 const DEBUG = getEnv("DEBUG");
 const stderr = context.process?.stderr;
 const useColour = stderr?.isTTY && !getEnv("NO_COLOR");
 const debug = context.console.Console?.(stderr)?.debug || context.console.debug;
-const log = (namespace: string, message: string) => {
-	const color = useColour ? colourNs(namespace) : namespace;
-	debug(`${color} ${message}`);
+const log = (namespace: string, ...parts: unknown[]) => {
+	const ns = useColour ? colourNs(namespace) : namespace;
+	const [p0, ...rest] = parts;
+	debug(`${ns} ${p0}`, ...rest);
 };
 
 export namespace DebugUtil {
@@ -70,11 +58,7 @@ export interface DebugFn {
 }
 
 export const createDebug = (namespace: string = ""): DebugFn => {
-	const debug = (...args: unknown[]) => {
-		if (debug.enabled) log(namespace, args.join(" "));
-	};
-
+	const debug = (...args: unknown[]) => debug.enabled && log(namespace, args.join(" "));
 	debug.enabled = DebugUtil.isEnabled(enabled, namespace);
-
 	return debug;
 };
