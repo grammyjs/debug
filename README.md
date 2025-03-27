@@ -12,12 +12,14 @@ Inspired by [`debug`](https://npmjs.com/package/debug), but very small and porta
 
 ```ts
 import { w } from "w";
+```
 
-// --
+```ts
 const log = w("app:main");
 log("Creating new user", { email: req.body.email });
+```
 
-// elsewhere
+```ts
 const log = w("app:auth");
 log("User authentication failed", { email: req.body.email });
 ```
@@ -39,6 +41,8 @@ Multiple namespaces can be specified by separating them with commas:
 ```sh
 DEBUG=app:main,app:auth node index.js
 ```
+
+An individual logger instance can also be enabled by setting `log.enabled = true` (or disabled by setting `false`).
 
 ### Supported:
 
