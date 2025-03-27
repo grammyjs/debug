@@ -2,7 +2,7 @@
 
 export const context = globalThis as unknown as {
 	// browsers
-	document?: any;
+	document?: unknown;
 	// Node, Deno, Bun
 	process?: {
 		env: { [key: string]: string };
@@ -20,8 +20,8 @@ export const context = globalThis as unknown as {
 	};
 	console: {
 		// everywhere
-		debug: (...args: any[]) => void;
+		debug: (...args: unknown[]) => void;
 		// Node, Deno, Bun
-		Console?: (stderr: any) => { debug: (...args: any[]) => void };
+		Console?: (stderr: unknown) => { debug: (...args: unknown[]) => void };
 	};
 };
