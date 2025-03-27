@@ -10,4 +10,4 @@ const pkg = JSON.parse(await Bun.file("./package.json").text());
 
 pkg.version = version;
 
-await Bun.write("./package.json", JSON.stringify(pkg, null, 2));
+await Bun.write("./package.json", JSON.stringify(pkg, null, "\t") + "\n");
