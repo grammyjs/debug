@@ -7,7 +7,7 @@ export class Namespaces {
 		this.update(debugspec);
 	}
 
-	update(debugspec: string) {
+	update(debugspec: string): void {
 		const parsed = this.parsed;
 		const debugs = debugspec.split(/[\s,]+/).map(each => each.trim());
 		for (const item of debugs) {
@@ -28,7 +28,7 @@ export class Namespaces {
 		this.parsed = parsed;
 	}
 
-	check(namespace: string) {
+	check(namespace: string): boolean {
 		const chain = namespace.split(":").map(part => part.trim());
 		let current = this.parsed;
 		let tentative = false;

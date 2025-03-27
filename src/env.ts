@@ -1,6 +1,6 @@
 import { context } from "./types.ts";
 
-const getDenoEnv = (variable: string) => {
+const getDenoEnv = (variable: string): string => {
 	const Deno = context.Deno;
 	const state = Deno!.permissions.querySync?.({ name: "env", variable })?.state;
 	if (state === "prompt") return "";
@@ -9,7 +9,7 @@ const getDenoEnv = (variable: string) => {
 
 const deno = "Deno" in globalThis;
 
-export const getEnv = (variable: string) => {
+export const getEnv = (variable: string): string => {
 	if (deno) return getDenoEnv(variable);
 	return context.process?.env[variable] || context.env?.[variable] || "";
 };

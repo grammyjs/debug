@@ -2,12 +2,12 @@ import { context } from "./types.ts";
 import { colourNs, selectColour } from "./colours.ts";
 import { getEnv } from "./env.ts";
 import { Namespaces } from "./namespacing.ts";
-const DEBUG = getEnv("DEBUG");
+const DEBUG: string = getEnv("DEBUG");
 const stderr = context.process?.stderr;
 const useColour = stderr?.isTTY && !getEnv("NO_COLOR");
 const debug = context.console.Console?.(stderr)?.debug || context.console.debug;
 
-export const namespaces = new Namespaces(DEBUG);
+export const namespaces: Namespaces = new Namespaces(DEBUG);
 
 export interface DebugFn {
 	(...args: unknown[]): void;
