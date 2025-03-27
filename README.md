@@ -1,5 +1,5 @@
 <div align="center">
-<img src="w.png" alt="logo" width="100" />
+<img src="https://raw.githubusercontent.com/feathers-studio/wiretap/master/w.png" alt="logo" width="128" />
 </div>
 
 <div align="center">
