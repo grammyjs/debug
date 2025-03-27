@@ -24,6 +24,9 @@ pnpm add w
 
 # bun
 bun add w
+
+# deno
+deno add jsr:@mkr/wiretap
 ```
 
 ## Quick Start
