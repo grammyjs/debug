@@ -9,6 +9,10 @@ jobs:
   release:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      id-token: write
+
     steps:
     - uses: actions/checkout@v4
     - uses: oven-sh/setup-bun@v2
@@ -20,3 +24,5 @@ jobs:
         bun publish --ignore-scripts --access=public
       env :
         NPM_CONFIG_TOKEN: ${{ secrets.NPM_CONFIG_TOKEN }}
+    - name: Publish to JSR
+      run: bunx jsr publish
