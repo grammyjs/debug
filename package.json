@@ -6,6 +6,9 @@
 	"author": "Muthu Kumar <muthukumar@thefeathers.in> (https://mkr.pw)",
 	"main": "./lib/w.js",
 	"types": "./lib/w.d.ts",
+	"files": [
+		"lib/"
+	],
 	"scripts": {
 		"check": "tsc --noEmit",
 		"build": "tsc",
