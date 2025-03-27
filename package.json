@@ -9,6 +9,7 @@
 	"files": [
 		"lib/"
 	],
+	"private": false,
 	"scripts": {
 		"check": "tsc --noEmit",
 		"build": "tsc",
