@@ -25,4 +25,4 @@ jobs:
       env :
         NPM_CONFIG_TOKEN: ${{ secrets.NPM_CONFIG_TOKEN }}
     - name: Publish to JSR
-      run: bunx jsr publish
+      run: bunx jsr publish --allow-dirty
