@@ -31,7 +31,7 @@ export class Namespaces {
 	check(namespace: string): boolean {
 		const chain = namespace.split(":").map(part => part.trim());
 		let current = this.parsed;
-		let tentative = false;
+		let tentative = current.allowed;
 		for (const part of chain) {
 			let picked = current.children[part];
 			if (!picked) return tentative ?? false;
