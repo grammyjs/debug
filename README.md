@@ -1,14 +1,14 @@
 <div align="center">
-<img src="https://raw.githubusercontent.com/feathers-studio/wiretap/master/w.png" alt="logo" width="128" />
-</div>
+<img src="https://raw.githubusercontent.com/feathers-studio/wiretap/master/docs/w.png" alt="logo" width="128" />
 
-<div align="center">
 <h1><code>w</code>iretap</h1>
-</div>
 
 Extremely tiny debug logging utility for all JavaScript runtimes.
 
 Inspired by [`debug`](https://npmjs.com/package/debug), but very small and portable.
+
+<img src="https://raw.githubusercontent.com/feathers-studio/wiretap/master/docs/example.png" alt="example" width="400" />
+</div>
 
 ## Installation
 
