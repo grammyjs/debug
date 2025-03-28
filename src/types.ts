@@ -16,7 +16,6 @@ export const context = globalThis as unknown as {
 				state: string;
 			};
 		};
-		env: { get: (variable: string) => string };
 	};
 	console: {
 		// everywhere

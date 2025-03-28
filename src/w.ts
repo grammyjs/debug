@@ -35,6 +35,8 @@ export interface DebugFn {
 	logger: (...args: unknown[]) => void;
 }
 
+const ns = (n: string) => (n ? n + " " : "");
+
 /**
  * Create a debug instance for a namespace.
  *
@@ -56,18 +58,19 @@ export interface DebugFn {
  * @returns A debug instance.
  */
 export function w(namespace: string = ""): DebugFn {
-	const debugfn = (start: unknown = "", ...rest: unknown[]) => {
+	const debugfn = (...data: unknown[]) => {
+		const start = data.length ? data.shift() : "";
 		if (!debugfn.enabled) return;
 		if (context.document)
 			debugfn.logger(
-				`%c${namespace}%c ${start}`,
+				`%c${ns(namespace)}%c${start}`,
 				`color: #${selectColour(namespace)[3]}`,
 				"color: inherit",
-				...rest,
+				...data,
 			);
 		else {
-			const ns = useColour ? colourNs(namespace) : namespace;
-			debugfn.logger(`${ns} ${start}`, ...rest);
+			const name = useColour ? colourNs(namespace) : namespace;
+			debugfn.logger(ns(name) + start, ...data);
 		}
 	};
 
