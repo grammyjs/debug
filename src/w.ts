@@ -1,11 +1,11 @@
 import { context } from "./types.ts";
 import { colourNs, selectColour } from "./colours.ts";
-import { getEnv } from "./env.ts";
+import { env } from "./env.ts";
 import { Namespaces } from "./namespacing.ts";
 
-const DEBUG: string = getEnv("DEBUG");
+const DEBUG: string = env("DEBUG");
 const stderr = context.process?.stderr;
-const useColour = stderr?.isTTY && !getEnv("NO_COLOR");
+const useColour = stderr?.isTTY && !env("NO_COLOR");
 const debug = context.console.Console?.(stderr)?.debug || context.console.debug;
 
 /**
@@ -56,20 +56,19 @@ export interface DebugFn {
  * @returns A debug instance.
  */
 export function w(namespace: string = ""): DebugFn {
-	const debugfn = (...args: unknown[]) => {
-		if (debugfn.enabled) {
-			const [p0, ...rest] = args;
-			if (context.document) {
-				debugfn.logger(
-					`%c${namespace}%c ${p0}`,
-					`color: #${selectColour(namespace).toString(16)}`,
-					"color: inherit",
-					...rest,
-				);
-			} else {
-				let ns = useColour ? colourNs(namespace) : namespace;
-				debugfn.logger(`${ns} ${p0}`, ...rest);
-			}
+	const debugfn = (...data: unknown[]) => {
+		if (!debugfn.enabled) return;
+		const [p0 = "", ...rest] = data;
+		if (context.document)
+			debugfn.logger(
+				`%c${namespace}%c ${p0}`,
+				`color: #${selectColour(namespace)[3]}`,
+				"color: inherit",
+				...rest,
+			);
+		else {
+			const ns = useColour ? colourNs(namespace) : namespace;
+			debugfn.logger(`${ns} ${p0}`, ...rest);
 		}
 	};
 
