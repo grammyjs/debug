@@ -17,7 +17,7 @@ export const namespaces: Namespaces = new Namespaces(DEBUG);
  * A debug logger instance.
  */
 export interface DebugFn {
-	(...args: unknown[]): void;
+	(...data: unknown[]): void;
 	/**
 	 * Manually enable or disable logging for this namespace.
 	 */
@@ -56,19 +56,18 @@ export interface DebugFn {
  * @returns A debug instance.
  */
 export function w(namespace: string = ""): DebugFn {
-	const debugfn = (...data: unknown[]) => {
+	const debugfn = (start: unknown = "", ...rest: unknown[]) => {
 		if (!debugfn.enabled) return;
-		const [p0 = "", ...rest] = data;
 		if (context.document)
 			debugfn.logger(
-				`%c${namespace}%c ${p0}`,
+				`%c${namespace}%c ${start}`,
 				`color: #${selectColour(namespace)[3]}`,
 				"color: inherit",
 				...rest,
 			);
 		else {
 			const ns = useColour ? colourNs(namespace) : namespace;
-			debugfn.logger(`${ns} ${p0}`, ...rest);
+			debugfn.logger(`${ns} ${start}`, ...rest);
 		}
 	};
 

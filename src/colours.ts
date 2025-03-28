@@ -1,6 +1,6 @@
 export type Colour = [r: number, g: number, b: number, hex: string];
 
-const genColors = (n = 72): Colour[] => {
+const genColours = (n = 72): Colour[] => {
 	const colors: Colour[] = [];
 	for (let i = 0; i < n; i++) {
 		const h = (i * 137.5) % 360;
@@ -14,7 +14,7 @@ const genColors = (n = 72): Colour[] => {
 	return colors;
 };
 
-const colors = genColors();
+const colours = genColours();
 
 const hash = (str: string): number => {
 	let h = 5381;
@@ -23,7 +23,7 @@ const hash = (str: string): number => {
 };
 
 export function selectColour(ns: string): Colour {
-	return colors[Math.abs(hash(ns)) % colors.length];
+	return colours[Math.abs(hash(ns)) % colours.length];
 }
 
 export const colourNs = (ns: string): string => {
