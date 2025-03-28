@@ -24,5 +24,6 @@ jobs:
         bun publish --ignore-scripts --access=public
       env :
         NPM_CONFIG_TOKEN: ${{ secrets.NPM_CONFIG_TOKEN }}
+        NPM_CONFIG_PROVENANCE: true
     - name: Publish to JSR
       run: bunx jsr publish --allow-dirty
