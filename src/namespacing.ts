@@ -29,6 +29,7 @@ export class Namespaces {
 	}
 
 	check(namespace: string): boolean {
+		if (namespace === "") return this.parsed.allowed;
 		const chain = namespace.split(":").map(part => part.trim());
 		let current = this.parsed;
 		let tentative = current.allowed;
