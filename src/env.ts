@@ -1,15 +1,7 @@
 import { context } from "./types.ts";
 
-const getDenoEnv = (variable: string): string => {
-	const Deno = context.Deno;
-	const state = Deno!.permissions.querySync?.({ name: "env", variable })?.state;
-	if (state === "prompt") return "";
-	return Deno!.env.get(variable) ?? "";
-};
+const prompts = (variable: string) =>
+	context.Deno?.permissions.querySync?.({ name: "env", variable })?.state === "prompt";
 
-const deno = "Deno" in globalThis;
-
-export const getEnv = (variable: string): string => {
-	if (deno) return getDenoEnv(variable);
-	return context.process?.env[variable] || context.env?.[variable] || "";
-};
+export const env = (variable: string): string =>
+	(!prompts(variable) && (context.process?.env ?? context.env)?.[variable]) || "";
