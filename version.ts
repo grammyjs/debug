@@ -11,7 +11,11 @@ pkg.version = version;
 
 await Bun.write("./package.json", JSON.stringify(pkg, null, "\t") + "\n");
 
-const jsr = JSON.parse(await Bun.file("./jsr.json").text());
-jsr.version = version;
+const jsr = {
+	name: "@mkr/wiretap",
+	version,
+	license: "MIT",
+	exports: "./src/w.ts",
+};
 
 await Bun.write("./jsr.json", JSON.stringify(jsr, null, "\t") + "\n");

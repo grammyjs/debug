@@ -116,6 +116,7 @@ By default, `w`iretap will log to stderr. You can customise the logger function 
 ```ts
 const log = w("app:custom");
 // Replace the default logger with your own
+log.logger = console.log.bind(console); // or
 log.logger = (...args) => console.log("[CUSTOM]", ...args);
 ```
 
@@ -125,4 +126,4 @@ log.logger = (...args) => console.log("[CUSTOM]", ...args);
 -   Bun
 -   Deno
 -   Cloudflare Workers
--   Browsers
+-   Browsers (by default, you _may_ need to turn on the "debug", "verbose", or similar setting in the console to see the logs in your browser to see debug logs)
