@@ -1,0 +1,19 @@
+{
+  "name": "@grammyjs/debug",
+  "version": "0.2.0",
+  "exports": "./debug.mjs",
+  "files": ["debug.mjs"],
+  "license": "MIT",
+  "description": "Log every branch grammY Composers could take",
+  "author": "Wojciech Pawlik <woj.pawlik@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grammyjs/debug.git"
+  },
+  "bugs": {
+    "url": "https://github.com/grammyjs/debug/issues"
+  },
+  "peerDependencies": {
+    "grammy": "<3"
+  }
+}
