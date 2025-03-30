@@ -1,32 +1,14 @@
-import { Composer } from "grammy";
+import { Context } from "grammy";
 
 const { debug } = console;
 const emoji = (bool) => bool ? "✅" : "❌";
-let call;
+const objectMap = (o, fn) => Object.fromEntries(Object.entries(o).map(fn));
 
-for (const k of Object.getOwnPropertyNames(Composer.prototype)) {
-    const v = Composer.prototype[k];
-    if (k === "errorBoundary") continue;
-    if (!/^\w+\(\w+, \.\.\.middleware\)/.test(v)) continue;
-
-    Composer.prototype[k] = function (arg) {
-        this.use((_, next) => {
-            call ??= [k, arg];
-            return next();
-        });
-        return v.apply(this, arguments);
+Context.has = objectMap(Context.has, ([k, v]) => [k, (arg) => {
+    const og = v(arg);
+    return (ctx) => {
+        const bool = og(ctx);
+        debug("%s Context.has.%s(%O)", emoji(bool), k, arg);
+        return bool;
     };
-}
-
-Composer.prototype.branch = function (
-    predicate,
-    trueMiddleware,
-    falseMiddleware,
-) {
-    return this.lazy(async (ctx) => {
-        const bool = await predicate(ctx);
-        if (call) debug("%s %s(%O)", emoji(bool), ...call);
-        call = undefined;
-        return bool ? trueMiddleware : falseMiddleware;
-    });
-};
+}]);
