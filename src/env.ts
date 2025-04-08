@@ -5,3 +5,5 @@ const prompts = (variable: string) =>
 
 export const env = (variable: string): string =>
 	(!prompts(variable) && (context.process?.env ?? context.env)?.[variable]) || "";
+
+export const noColor = context.Deno?.noColor ?? Boolean(env("NO_COLOR"));

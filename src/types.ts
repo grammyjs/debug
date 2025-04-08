@@ -2,7 +2,9 @@
 
 export const context = globalThis as unknown as {
 	// browsers
-	document?: unknown;
+	navigator: {
+		userAgent: string;
+	};
 	// Node, Deno, Bun
 	process?: {
 		env: { [key: string]: string };
@@ -11,6 +13,7 @@ export const context = globalThis as unknown as {
 	// Web, Deno Workers, Cloudflare Workers
 	env?: { [key: string]: string };
 	Deno?: {
+		noColor: boolean;
 		permissions: {
 			querySync: (options: { name: string; variable: string }) => {
 				state: string;
