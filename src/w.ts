@@ -64,7 +64,7 @@ export function w(namespace: string = ""): DebugFn {
 		if (context.document)
 			debugfn.logger(
 				`%c${ns(namespace)}%c${start}`,
-				`color: #${selectColour(namespace)[3]}`,
+				`color: #${selectColour(namespace).toString(16)}`,
 				"color: inherit",
 				...data,
 			);
