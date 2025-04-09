@@ -61,18 +61,19 @@ const ns = (n: string) => (n ? n + " " : "");
  * @returns A debug instance.
  */
 export function w(namespace: string = ""): DebugFn {
+	const colour = selectColour(namespace);
 	const debugfn = (...data: unknown[]) => {
-		const start = data.length ? data.shift() : "";
 		if (!debugfn.enabled) return;
+		const start = data.length ? data.shift() : "";
 		if (!useAnsi) {
 			debugfn.logger(
 				`%c${ns(namespace)}%c${start}`,
-				`color: #${selectColour(namespace).toString(16)}`,
+				`color: #${colour.toString(16)}`,
 				"color: inherit",
 				...data,
 			);
 		} else {
-			const name = useColour ? colourNs(namespace) : namespace;
+			const name = useColour ? colourNs(namespace, colour) : namespace;
 			debugfn.logger(ns(name) + start, ...data);
 		}
 	};

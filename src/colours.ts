@@ -1,4 +1,5 @@
 // https://github.com/debug-js/debug/blob/4.3.7/src/browser.js
+// deno-fmt-ignore
 const colors = [
 	0x0000cc, 0x0000ff, 0x0033cc, 0x0033ff, 0x0066cc, 0x0066ff, 0x0099cc, 0x0099ff, 0x00cc00, 0x00cc33, 0x00cc66,
 	0x00cc99, 0x00cccc, 0x00ccff, 0x3300cc, 0x3300ff, 0x3333cc, 0x3333ff, 0x3366cc, 0x3366ff, 0x3399cc, 0x3399ff,
@@ -21,8 +22,7 @@ export function selectColour(ns: string): number {
 	return colors[Math.abs(hash) % colors.length];
 }
 
-export const colourNs = (ns: string): string => {
-	const color = selectColour(ns);
+export const colourNs = (ns: string, color = selectColour(ns)): string => {
 	const r = color >> 16;
 	const g = (color >> 8) & 0xff;
 	const b = color & 0xff;
