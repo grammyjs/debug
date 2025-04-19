@@ -6,7 +6,7 @@ import { Namespaces } from "./namespacing.ts";
 const DEBUG: string = env("DEBUG");
 const stderr = context.process?.stderr;
 const useColour = stderr?.isTTY && !noColor;
-const { debug } = context.console.Console?.(stderr) ?? context.console;
+const console = context.console.Console?.(stderr) ?? context.console;
 const useAnsi = ["Node.js", "Bun"].includes(
 	context.navigator.userAgent.split("/", 1)[0],
 );
@@ -25,17 +25,6 @@ export interface DebugFn {
 	 * Manually enable or disable logging for this namespace.
 	 */
 	enabled: boolean;
-	/**
-	 * The underlying logger function. By default, this writes to `stderr`.
-	 * To customise, assign a different logger function.
-	 *
-	 * @example
-	 * ```ts
-	 * const log = w("app");
-	 * log.logger = console.log.bind(console);
-	 * ```
-	 */
-	logger: (...args: unknown[]) => void;
 }
 
 const ns = (n: string) => (n ? n + " " : "");
@@ -65,21 +54,20 @@ export function w(namespace: string = ""): DebugFn {
 	const debugfn = (...data: unknown[]) => {
 		if (!debugfn.enabled) return;
 		const start = data.length ? data.shift() : "";
-		if (!useAnsi) {
-			debugfn.logger(
+		if (useAnsi) {
+			const name = useColour ? colourNs(namespace, colour) : namespace;
+			console.debug(ns(name) + start, ...data);
+		} else {
+			console.debug(
 				`%c${ns(namespace)}%c${start}`,
 				`color: #${colour.toString(16)}`,
 				"color: inherit",
 				...data,
 			);
-		} else {
-			const name = useColour ? colourNs(namespace, colour) : namespace;
-			debugfn.logger(ns(name) + start, ...data);
 		}
 	};
 
 	debugfn.enabled = namespaces.check(namespace);
-	debugfn.logger = debug;
 
 	return debugfn;
 }
