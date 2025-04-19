@@ -1,48 +1,37 @@
-<div align="center">
-<img src="https://raw.githubusercontent.com/feathers-studio/wiretap/master/docs/w.png" alt="logo" width="128" />
+# `@grammyjs/debug`
 
-<h1><code>w</code>iretap</h1>
-
-Extremely tiny debug logging utility for all JavaScript runtimes.
-
-Inspired by [`debug`](https://npmjs.com/package/debug), but very small and portable.
+Tiny debug logging utility for all JavaScript runtimes,
+inspired by [`debug`](https://github.com/debug-js/debug).
 
 <img src="https://raw.githubusercontent.com/feathers-studio/wiretap/master/docs/example.png" alt="example" width="400" />
-</div>
 
 ## Installation
 
 ```sh
-# npm
-npm install w
-
-# yarn
-yarn add w
-
-# pnpm
-pnpm add w
+# node
+npm install @grammyjs/debug
 
 # bun
-bun add w
+bun add @grammyjs/debug
 
 # deno
-deno add jsr:@mkr/wiretap
+deno add jsr:@grammyjs/debug
 ```
 
 ## Quick Start
 
 ```ts
-import { w } from "w";
+import { createDebug } from "@grammyjs/debug";
 ```
 
 ```ts
-const log = w("app:main");
-log("Creating new user", { email: req.body.email });
+const debug = createDebug("app:main");
+debug("Creating new user", { email: req.body.email });
 ```
 
 ```ts
-const log = w("app:auth");
-log("User authentication failed", { email: req.body.email });
+const debug = createDebug("app:auth");
+debug("User authentication failed", { email: req.body.email });
 ```
 
 If you're a library author, we recommend using your library's name as part of your namespace.
@@ -102,22 +91,13 @@ app:main Creating new user { email: 'a@test.com' }
 An individual logger instance can also be enabled or disabled programmatically:
 
 ```ts
-const log = w("app:feature");
+const log = createDebug("app:feature");
 
 // Enable this logger regardless of DEBUG environment
 log.enabled = true;
 
 // Disable this logger regardless of DEBUG environment
 log.enabled = false;
-```
-
-By default, `w`iretap will log to stderr. You can customise the logger function used:
-
-```ts
-const log = w("app:custom");
-// Replace the default logger with your own
-log.logger = console.log.bind(console); // or
-log.logger = (...args) => console.log("[CUSTOM]", ...args);
 ```
 
 ## Supported Environments:

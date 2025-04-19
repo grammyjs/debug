@@ -1,11 +1,11 @@
 import { context } from "./types.ts";
-import { colourNs, selectColour } from "./colours.ts";
-import { env, noColor } from "./env.ts";
+import { colorNs, selectColor } from "./colors.ts";
+import { env } from "./env.ts";
 import { Namespaces } from "./namespacing.ts";
 
 const DEBUG: string = env("DEBUG");
 const stderr = context.process?.stderr;
-const useColour = stderr?.isTTY && !noColor;
+const useColor = stderr?.isTTY && !env("NO_COLOR");
 const console = context.console.Console?.(stderr) ?? context.console;
 const useAnsi = ["Node.js", "Bun"].includes(
 	context.navigator.userAgent.split("/", 1)[0],
@@ -14,7 +14,7 @@ const useAnsi = ["Node.js", "Bun"].includes(
 /**
  * The underlying namespace manager.
  */
-export const namespaces: Namespaces = new Namespaces(DEBUG);
+const namespaces: Namespaces = new Namespaces(DEBUG);
 
 /**
  * A debug logger instance.
@@ -34,8 +34,8 @@ const ns = (n: string) => (n ? n + " " : "");
  *
  * @example
  * ```ts
- * import { w } from "w";
- * const log = w("app");
+ * import { createDebug } from "@grammyjs/debug";
+ * const log = createDebug("app");
  * log("hello");
  * ```
  *
@@ -49,18 +49,18 @@ const ns = (n: string) => (n ? n + " " : "");
  * @param namespace - The namespace to debug.
  * @returns A debug instance.
  */
-export function w(namespace: string = ""): DebugFn {
-	const colour = selectColour(namespace);
+export function createDebug(namespace: string): DebugFn {
+	const color = selectColor(namespace);
 	const debugfn = (...data: unknown[]) => {
 		if (!debugfn.enabled) return;
 		const start = data.length ? data.shift() : "";
 		if (useAnsi) {
-			const name = useColour ? colourNs(namespace, colour) : namespace;
+			const name = useColor ? colorNs(namespace, color) : namespace;
 			console.debug(ns(name) + start, ...data);
 		} else {
 			console.debug(
 				`%c${ns(namespace)}%c${start}`,
-				`color: #${colour.toString(16)}`,
+				`color: #${color.toString(16)}`,
 				"color: inherit",
 				...data,
 			);

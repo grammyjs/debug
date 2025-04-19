@@ -11,7 +11,7 @@ const colors = [
 ];
 
 // https://github.com/debug-js/debug/blob/4.3.4/src/common.js#L41
-export function selectColour(ns: string): number {
+export function selectColor(ns: string): number {
 	let hash = 0;
 
 	for (let i = 0; i < ns.length; i++) {
@@ -22,7 +22,7 @@ export function selectColour(ns: string): number {
 	return colors[Math.abs(hash) % colors.length];
 }
 
-export const colourNs = (ns: string, color = selectColour(ns)): string => {
+export const colorNs = (ns: string, color = selectColor(ns)): string => {
 	const r = color >> 16;
 	const g = (color >> 8) & 0xff;
 	const b = color & 0xff;

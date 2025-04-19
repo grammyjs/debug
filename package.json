@@ -1,28 +1,29 @@
 {
-	"name": "w",
+	"name": "@grammyjs/debug",
 	"version": "0.0.0-dev",
-	"homepage": "https://github.com/feathers-studio/wiretap",
+	"type": "module",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/feathers-studio/wiretap.git"
+		"url": "https://github.com/grammyjs/debug.git"
 	},
-	"description": "Extremely tiny debug logging utility for all JavaScript runtimes.",
+	"description": "Tiny debug logging utility for all JavaScript runtimes",
 	"license": "MIT",
 	"author": "Muthu Kumar <muthukumar@thefeathers.in> (https://mkr.pw)",
-	"main": "./lib/w.js",
-	"types": "./lib/w.d.ts",
+	"exports": "./lib/mod.js",
+	"types": "./lib/mod.d.ts",
 	"files": [
-		"w.png",
 		"lib/"
 	],
-	"private": false,
+	"keywords": [
+		"grammyjs",
+		"debug",
+		"log"
+	],
 	"scripts": {
 		"check": "tsc --noEmit",
-		"build": "tsc",
-		"prepare": "npm run build"
+		"prepare": "tsc"
 	},
 	"devDependencies": {
-		"@types/bun": "^1.2.8",
 		"typescript": "^5.0.0"
 	}
 }
