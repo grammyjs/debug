@@ -1,29 +1,15 @@
 {
-	"name": "@grammyjs/debug",
-	"version": "0.0.0-dev",
-	"type": "module",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/grammyjs/debug.git"
-	},
-	"description": "Tiny debug logging utility for all JavaScript runtimes",
-	"license": "MIT",
-	"author": "Muthu Kumar <muthukumar@thefeathers.in> (https://mkr.pw)",
-	"exports": "./lib/mod.js",
-	"types": "./lib/mod.d.ts",
-	"files": [
-		"lib/"
-	],
-	"keywords": [
-		"grammyjs",
-		"debug",
-		"log"
-	],
-	"scripts": {
-		"check": "tsc --noEmit",
-		"prepare": "tsc"
-	},
-	"devDependencies": {
-		"typescript": "^5.0.0"
-	}
+  "name": "@grammyjs/debug",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grammyjs/debug.git"
+  },
+  "description": "Tiny debug logging utility for all JavaScript runtimes",
+  "license": "MIT",
+  "author": "Wojciech Pawlik <woj.pawlik@gmail.com>",
+  "keywords": [
+    "grammyjs",
+    "debug",
+    "log"
+  ]
 }

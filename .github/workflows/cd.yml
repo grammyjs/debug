@@ -1,0 +1,24 @@
+name: CD
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "main"
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  jsr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+      - name: Dry run?
+        if: github.event_name == 'pull_request'
+        run: echo "DRY_RUN=--dry-run" >> "$GITHUB_ENV"
+      - run: deno lint
+      - run: deno test --no-check
+      - run: deno publish $DRY_RUN # idempotent

@@ -1,22 +1,9 @@
 # `@grammyjs/debug`
 
-Tiny debug logging utility for all JavaScript runtimes,
-inspired by [`debug`](https://github.com/debug-js/debug).
+Tiny debug logging utility for all JavaScript runtimes, inspired by
+[`debug`](https://github.com/debug-js/debug).
 
 <img src="https://raw.githubusercontent.com/feathers-studio/wiretap/master/docs/example.png" alt="example" width="400" />
-
-## Installation
-
-```sh
-# node
-npm install @grammyjs/debug
-
-# bun
-bun add @grammyjs/debug
-
-# deno
-deno add jsr:@grammyjs/debug
-```
 
 ## Quick Start
 
@@ -45,7 +32,19 @@ All debug logs are disabled by default, and can be enabled by setting the `DEBUG
 app:main Creating new user { email: 'a@test.com' }
 ```
 
-To enable all logs at any level, use `*`. Naturally `DEBUG=*` will enable all logs at all levels.
+```html
+<script>
+  const env = {
+    DEBUG: "app:main",
+  };
+</script>
+<script>
+  // Your code
+</script>
+```
+
+To enable all logs at any level, use `*`. Naturally `DEBUG=*` will enable all
+logs at all levels.
 
 ```sh
 > DEBUG=app:* node index.js

@@ -1,18 +1,17 @@
 {
-	"name": "@grammyjs/debug",
-	"exports": "./src/mod.ts",
-	"publish": {
-		"exclude": [
-			".*",
-			"docs/",
-			"**/*.js*"
-		]
-	},
+  "name": "@grammyjs/debug",
+  "version": "0.2.1",
+  "exports": "./src/mod.ts",
+  "publish": {
+    "exclude": [
+      ".*",
+      "docs/",
+      "**/*.js*"
+    ]
+  },
 
-	"exclude": ["lib/"],
-	"lock": false,
-	"fmt": {
-		"useTabs": true,
-		"proseWrap": "preserve"
-	}
+  "lock": false,
+  "tasks": {
+    "version": "deno run --allow-read=. --allow-write=. --allow-run=git jsr:@krlwlfrt/version@1"
+  }
 }
