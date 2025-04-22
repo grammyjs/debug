@@ -20,8 +20,7 @@ jobs:
 
       - run: deno lint
       - run: deno test --no-check
-
-      - run: npm install --ignore-scripts
+      - run: deno install
       - run: npm run prepare
 
       - name: Publish to JSR
